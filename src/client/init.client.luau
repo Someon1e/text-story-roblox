@@ -33,7 +33,7 @@ New("ScrollingFrame")({
 	ScrollBarThickness = 5,
 	AutomaticCanvasSize = Enum.AutomaticSize.Y,
 
-	BackgroundColor3 = Color3.fromRGB(210, 85, 76),
+	BackgroundColor3 = Color3.fromRGB(255, 153, 180),
 
 	[Children] = {
 		New("TextLabel")({
