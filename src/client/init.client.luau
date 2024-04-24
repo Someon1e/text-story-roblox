@@ -55,9 +55,7 @@ New("ScrollingFrame")({
 			Size = UDim2.new(1, 0, 0, 0),
 			AutomaticSize = Enum.AutomaticSize.Y,
 		}),
-		New("UIListLayout") {
-
-		}
+		New("UIListLayout")({}),
 	},
 })
 
@@ -71,13 +69,13 @@ local function revealText(text)
 	for _ in utf8.graphemes(text) do
 		length += 1
 		storyTextMaxVisibleGraphemes:set(length)
-		task.wait(0.02)
+		task.wait(0.01)
 	end
 	blockInputs = false
 end
 
 local story = require(Packages:WaitForChild("story")).new(revealText)
-story:update()
+story:outputText()
 
 local input = New("TextBox")({
 	Name = "Input",
