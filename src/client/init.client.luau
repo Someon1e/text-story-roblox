@@ -29,9 +29,9 @@ New("ScrollingFrame")({
 	AnchorPoint = Vector2.new(0.5, 0.5),
 	Position = UDim2.fromScale(0.5, 0.3),
 
-	Size = UDim2.fromScale(0.7, 0.7),
+	Size = UDim2.fromScale(0.75, 0.6),
 	ScrollBarThickness = 5,
-	AutomaticCanvasSize = Enum.AutomaticSize.Y,
+	AutomaticCanvasSize = Enum.AutomaticSize.XY,
 
 	BackgroundColor3 = Color3.fromRGB(255, 153, 180),
 
@@ -43,7 +43,6 @@ New("ScrollingFrame")({
 			TextColor3 = Color3.fromRGB(25, 25, 25),
 			FontFace = Font.fromName("Inconsolata"),
 			TextSize = 20,
-			TextWrap = true,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextYAlignment = Enum.TextYAlignment.Top,
 			MaxVisibleGraphemes = storyTextMaxVisibleGraphemes,
@@ -53,7 +52,7 @@ New("ScrollingFrame")({
 			AnchorPoint = Vector2.new(0.5, 0.5),
 
 			Size = UDim2.new(1, 0, 0, 0),
-			AutomaticSize = Enum.AutomaticSize.Y,
+			AutomaticSize = Enum.AutomaticSize.XY,
 		}),
 		New("UIListLayout")({}),
 	},
