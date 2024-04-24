@@ -1,8 +1,14 @@
 local Story = {}
 Story.__index = Story
 
-local function lowercaseFind(text, match)
-	return string.find(string.lower(text), match) ~= nil
+local function lowercaseFind(text, matches)
+	local lowered = string.lower(text)
+	for _, match in matches do
+		if string.find(lowered, match) then
+			return true
+		end
+	end
+	return false
 end
 
 local storyLine = {
@@ -24,9 +30,9 @@ You find yourself standing at the entrance of a dense forest. What will you do?
 	Search the area for clues
 	Wait and observe]],
 		processInput = function(input: string)
-			local entering = lowercaseFind(input, "enter")
-			local searching = lowercaseFind(input, "search")
-			local waiting = lowercaseFind(input, "wait")
+			local entering = lowercaseFind(input, {"enter", "forest"})
+			local searching = lowercaseFind(input, {"search", "clues"})
+			local waiting = lowercaseFind(input, {"wait", "observe"})
 
 			if entering then
 				-- Only one choice
