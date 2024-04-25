@@ -13,51 +13,67 @@ end
 
 local storyLine = {
 	start = {
-		text = 
-[[You awaken in a dimly lit chamber with no memory of how you arrived.
-The air is thick with dust, and the only sound is the faint echo of your own breathing.
+		text = [[You find yourself standing at the edge of a dense, mist-shrouded forest.
+The air is thick with anticipation, and the trees seem to whisper secrets to each other.
+A faint glow emanates from within the forest, drawing you closer.
 
-As you stand up, you notice a mysterious inscription carved into the stone wall:
-	"Welcome, traveler, to the forgotten realm of Eldoria.
-	Long ago, this land flourished with magic and prosperity, but now it lies shrouded in darkness.
-	You have been chosen to embark on a quest to restore light to Eldoria and uncover the truth of your own past.
-	Beware, for many dangers lurk in the shadows, and not all is as it seems."
-
-You gather your courage and set forth into the unknown, determined to unravel the mysteries of Eldoria and fulfill your destiny.
-
-You find yourself standing at the entrance of a dense forest. What will you do?
-	Enter the forest and explore
-	Search the area for clues
-	Wait and observe]],
+What will you do?
+    Enter the forest cautiously.
+    Stay put and observe from a distance.
+    Turn around and leave.]],
 		processInput = function(input: string)
-			local entering = lowercaseFind(input, {"enter", "forest"})
-			local searching = lowercaseFind(input, {"search", "clues"})
-			local waiting = lowercaseFind(input, {"wait", "observe"})
+			local entering = lowercaseFind(input, { "enter", "forest" })
+			local observing = lowercaseFind(input, { "stay", "observe" })
+			local leaving = lowercaseFind(input, { "turn", "leave" })
 
 			if entering then
 				-- Only one choice
-				if searching or waiting then
+				if observing or leaving then
 					return false
 				end
 
-				return "ending"
-			elseif searching then
+				return "enterForest"
+			elseif observing then
 				-- Only one choice
-				if entering or waiting then
+				if entering or leaving then
 					return false
 				end
 
-				return "ending"
-			elseif waiting then
+				return "observeAtStart"
+			elseif leaving then
 				-- Only one choice
-				if entering or searching then
+				if entering or observing then
 					return false
 				end
 
-				return "ending"
+				return "leaveAtStart"
 			end
 
 			return false
+		end,
+	},
+	enterForest = {
+		text = [[You take a deep breath and step into the forest, your senses tingling with excitement and trepidation.
+The glow intensifies as you venture further, casting eerie shadows on the twisted branches above.
+Suddenly, you come across a fork in the path.
+
+	What will you do?
+		Take the left path.
+		Take the right path.]],
+		processInput = function()
+			return "ending"
+		end,
+	},
+	observeAtStart = {
+		text = [[You wait for 20 minutes... nothing interesting happens. Do you want to keep waiting?]],
+		processInput = function()
+			return "ending"
+		end,
+	},
+	leaveAtStart = {
+		text = [[A mysterious force keeps you from leaving...]],
+		processInput = function()
+			return "start"
 		end,
 	},
 	ending = {
