@@ -66,8 +66,26 @@ Suddenly, you come across a fork in the path.
 	},
 	observeAtStart = {
 		text = [[You wait for 20 minutes... nothing interesting happens. Do you want to keep waiting?]],
-		processInput = function()
-			return "ending"
+		processInput = function(input: string)
+			local yes = lowercaseFind(input, { "yes" })
+			local no = lowercaseFind(input, { "no" })
+			if yes then
+				-- Only one choice
+				if no then
+					return false
+				end
+
+				return "observeAtStart"
+			elseif no then
+				-- Only one choice
+				if yes then
+					return false
+				end
+
+				return "start"
+			else
+				return false
+			end
 		end,
 	},
 	leaveAtStart = {
