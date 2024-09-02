@@ -12,17 +12,20 @@ local playerGui = localPlayer:WaitForChild("PlayerGui")
 local Packages = ReplicatedStorage:WaitForChild("Shared")
 
 local Fusion = require(Packages:WaitForChild("Fusion"))
-local New = Fusion.New
-local Value = Fusion.Value
-local Hydrate = Fusion.Hydrate
-local OnEvent = Fusion.OnEvent
+
+local scope = Fusion.scoped({
+	New = Fusion.New,
+	Value = Fusion.Value,
+	Hydrate = Fusion.Hydrate,
+})
 local Children = Fusion.Children
+local OnEvent = Fusion.OnEvent
 
 local gui = Instance.new("ScreenGui")
 
-local storyText = Value("")
-local storyTextMaxVisibleGraphemes = Value(-1)
-New("ScrollingFrame")({
+local storyText = scope:Value("")
+local storyTextMaxVisibleGraphemes = scope:Value(-1)
+scope:New("ScrollingFrame")({
 	Name = "Story",
 	Parent = gui,
 
@@ -36,7 +39,7 @@ New("ScrollingFrame")({
 	BackgroundColor3 = Color3.fromRGB(255, 153, 180),
 
 	[Children] = {
-		New("TextLabel")({
+		scope:New("TextLabel")({
 			Name = "Label",
 
 			Text = storyText,
@@ -54,7 +57,7 @@ New("ScrollingFrame")({
 			Size = UDim2.new(1, 0, 0, 0),
 			AutomaticSize = Enum.AutomaticSize.XY,
 		}),
-		New("UIListLayout")({}),
+		scope:New("UIListLayout")({}),
 	},
 })
 
@@ -76,7 +79,7 @@ end
 local story = require(Packages:WaitForChild("story")).new(revealText)
 story:outputText()
 
-local input = New("TextBox")({
+local input = scope:New("TextBox")({
 	Name = "Input",
 	Parent = gui,
 
@@ -92,7 +95,7 @@ local input = New("TextBox")({
 	Size = UDim2.fromScale(0.25, 0.1),
 })
 unneeded_assert(input:IsA("TextBox"))
-Hydrate(input)({
+scope:Hydrate(input)({
 	[OnEvent("FocusLost")] = function()
 		if blockInputs then
 			return
